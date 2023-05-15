@@ -89,7 +89,7 @@ export default class Camera {
 
     this.controls.addEventListener('lock', () => {
       this.controls.enabled = false;
-      this.speed = 0.08; //0.02
+      this.speed = 0.02; //0.02
       instructions.style.display = 'none';
       blocker.style.display = 'none';
       instructions2.style.display = '';
