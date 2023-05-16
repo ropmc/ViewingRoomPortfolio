@@ -9,7 +9,7 @@ export default class Room {
         this.resources = this.experience.resources;
         this.room = this.resources.items.room;
         this.actualRoom = this.room.scene;
-        console.log(this.actualRoom.children);
+        //console.log(this.actualRoom.children);
 
         this.setModel();
         this.setAnimation();
@@ -82,7 +82,7 @@ export default class Room {
 
     setAnimation(){
         this.mixer = new THREE.AnimationMixer(this.actualRoom);
-        console.log(this.room);
+        //console.log(this.room);
     }
 
     resize() {
