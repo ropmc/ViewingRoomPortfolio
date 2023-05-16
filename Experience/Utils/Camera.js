@@ -191,7 +191,6 @@ export default class Camera {
     this.colliderMesh.position.set(this.perspectiveCamera.position.x, 0.1, this.perspectiveCamera.position.z); //NOVIDADE 
     this.colliderMesh.rotation.copy(this.perspectiveCamera.rotation); //NOVIDADE
 
-    console.log(this.perspectiveCamera.position)
 
     this.resources = this.experience.resources;
     this.room = this.resources.items.room;
