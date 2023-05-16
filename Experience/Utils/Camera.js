@@ -40,7 +40,7 @@ export default class Camera {
     this.sound = new THREE.PositionalAudio( listener );
 
     const audioLoader = new THREE.AudioLoader();
-    audioLoader.load( './or2.wav', ( buffer ) => {
+    audioLoader.load('../../or2.wav', ( buffer ) => {
       this.sound.setBuffer( buffer );
       this.sound.setRefDistance( 5 );
       this.sound.setLoop(true);
