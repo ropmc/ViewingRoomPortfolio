@@ -12,8 +12,9 @@ export default class Camera {
     this.sizes = this.experience.sizes;
     this.speed = 0;
     blocker2.style.display='none';
+
     
-    
+
     this.canvas = this.experience.canvas;
     this.moveForward = false;
 	  this.moveBackward = false;
@@ -33,6 +34,25 @@ export default class Camera {
     this.createOrthographicCamera();
     this.setPointerLockControls();
     this.createColliderGeometry();
+
+    const listener = new THREE.AudioListener();
+    this.perspectiveCamera.add( listener );
+    this.sound = new THREE.PositionalAudio( listener );
+
+    const audioLoader = new THREE.AudioLoader();
+    audioLoader.load( 'or2.wav', ( buffer ) => {
+      this.sound.setBuffer( buffer );
+      this.sound.setRefDistance( 5 );
+      this.sound.setLoop(true);
+      //sound.play();
+    });
+
+    const sphere = new THREE.SphereGeometry( 0.1, 1, 1 );
+    const materiall = new THREE.MeshPhongMaterial( { color: 0xff2200 } );
+    const mesh = new THREE.Mesh( sphere, materiall );
+    mesh.position.set(0, 5, -25);
+    this.scene.add( mesh );
+    mesh.add( this.sound );
   }
 
   createColliderGeometry() {
@@ -45,8 +65,8 @@ export default class Camera {
   createPerspectiveCamera() {
     this.perspectiveCamera = new THREE.PerspectiveCamera(35, this.sizes.width / this.sizes.height, 0.1, 1000);
     this.scene.add(this.perspectiveCamera);
-    this.perspectiveCamera.position.set(0, 1.5, 2.3);
-    this.perspectiveCamera.lookAt(0, 1.5, -2.5 );
+    this.perspectiveCamera.position.set(0, 1.5, -45);
+    this.perspectiveCamera.lookAt(0, 6, -2.5 );
 
     this.controls = new PointerLockControls(this.perspectiveCamera, this.canvas);
     this.scene.add(this.controls.getObject());
@@ -69,6 +89,7 @@ export default class Camera {
   }
 
   setPointerLockControls() {
+    
     this.controls = new PointerLockControls(this.perspectiveCamera, this.canvas);
     const instructions = document.getElementById( 'instructions' );
 
@@ -85,6 +106,7 @@ export default class Camera {
       instructions2.style.display='none';
       blocker2.style.display='none';
       this.speed = 0;
+      this.sound.pause()
     });
 
     this.controls.addEventListener('lock', () => {
@@ -94,6 +116,7 @@ export default class Camera {
       blocker.style.display = 'none';
       instructions2.style.display = '';
       blocker2.style.display = 'block';
+      this.sound.play()
     });
 
 
@@ -149,6 +172,8 @@ export default class Camera {
     this.perspectiveCamera.aspect = this.sizes.width / this.sizes.height;
     this.perspectiveCamera.updateProjectionMatrix();
 
+    this.resources.video['tela1']
+
     // Updating Orthographic Camera on resize
     const frustrumSize = 5;
     this.orthographicCamera.left = -this.sizes.width / frustrumSize;
@@ -166,10 +191,11 @@ export default class Camera {
     this.colliderMesh.position.set(this.perspectiveCamera.position.x, 0.1, this.perspectiveCamera.position.z); //NOVIDADE 
     this.colliderMesh.rotation.copy(this.perspectiveCamera.rotation); //NOVIDADE
 
+    console.log(this.perspectiveCamera.position)
+
     this.resources = this.experience.resources;
     this.room = this.resources.items.room;
     this.actualRoom = this.room;
-    
     const time = performance.now();
     const velocity = new THREE.Vector3();
     const direction = new THREE.Vector3();

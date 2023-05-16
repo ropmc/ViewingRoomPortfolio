@@ -11,8 +11,8 @@ export default class Environment {
 
         this.setSunlight();
         this.setSunlight2();
-        //this.setSunlight3();
-        this.setSunlight4();
+        //this.setCornerLight();
+        //this.setSunlight4();
         //this.createLightingRoom1();
         //this.createLightingRoom2();
         //this.createLightingRoom3();
@@ -21,21 +21,24 @@ export default class Environment {
  
     setSunlight(){
       //this.sunLight = new THREE.DirectionalLight('#ffffff', 0.08, 3.8 , 0.00001 );
-      this.sunLight = new THREE.PointLight('#ffffff', 5, 5, 3.58);
+      this.sunLight = new THREE.PointLight('#ffffff', 1, 12, 0.64);
       this.sunLight.position.set(0, 0 , 0.3);
       this.scene.add(this.sunLight);
     }
 
     setSunlight2(){
-      this.sunLight = new THREE.PointLight('#ffffff', 3.38, 4.2, 2  );
-      this.sunLight.position.set(0, 0 , -14.944);
+      this.sunLight = new THREE.PointLight('#ffffff', 1, 11.5, 0.64);
+      this.sunLight.position.set(0, 0, -40.771);
       this.scene.add(this.sunLight);
     }
 
-    setSunlight3(){
-      this.sunLight = new THREE.PointLight('#ffffff', 0.08, 0 );
-      this.sunLight.position.set(0.02066667377948761, 2.3384602069854736, -15.420662879943848);
+    setCornerLight(){
+      this.sunLight = new THREE.SpotLight('#ffffff', 1, 0 );
+      this.sunLight.position.set(6, 0, -32);
+      this.sunLight.angle = Math.PI/32
+      this.sunLight.target.position.set(7, 10, -35);
       this.scene.add(this.sunLight);
+      this.scene.add(this.sunLight.target);
     }
 
     setSunlight4(){
